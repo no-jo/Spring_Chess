@@ -1,6 +1,6 @@
 package com.capgemini.chess.service;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.capgemini.chess.ecxeptions.NoDataToRead;
+import com.capgemini.chess.profileDAO.UserProfileDAO;
+import com.capgemini.chess.profileDAOimpl.PlayerProfileDAOImplMap;
 import com.capgemini.chess.service.impl.ProfileServiceImpl;
 import com.capgemini.chess.service.to.UserProfileTO;
 
@@ -19,6 +22,7 @@ public class UserServiceTest {
 
 	@Autowired
 	ProfileService service;
+	UserProfileDAO dao;
 
 	@Configuration
 	static class RankServiceTestContextConfiguration {
@@ -26,14 +30,20 @@ public class UserServiceTest {
 		public ProfileService userService() {
 			return new ProfileServiceImpl();
 		}
+		@Bean
+		public UserProfileDAO daoSetup() {
+			return new PlayerProfileDAOImplMap();
+		}
 	}
+	
 
-	@Test
-	public void testReadUserSuccessful() throws Exception {
+	@Test (expected = NoDataToRead.class)
+	public void shouldThrowExceptionAsDataIsEmpty() throws Exception {
 
 		// when
-		UserProfileTO userTO = service.readUser(1L);
-		assertNotNull(userTO);
+		service.readUser(1L);
+		
+		// then exception
 	}
 
 }

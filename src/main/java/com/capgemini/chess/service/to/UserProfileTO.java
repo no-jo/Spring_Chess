@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserProfileTO {
 	
-	private long id;
+	private Long id;
 	private String login;
 	private String password;
 	private String name;
@@ -32,11 +32,11 @@ public class UserProfileTO {
 		this.password = password;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

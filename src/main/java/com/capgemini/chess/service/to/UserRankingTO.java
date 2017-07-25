@@ -2,7 +2,7 @@ package com.capgemini.chess.service.to;
 
 public class UserRankingTO {
 
-	private long id;
+	private Long id;
 	private long scoreSum;
 	private int level;
 	private long position;
