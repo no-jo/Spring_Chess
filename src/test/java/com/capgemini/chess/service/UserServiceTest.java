@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.capgemini.chess.service.impl.UserServiceImpl;
+import com.capgemini.chess.service.impl.ProfileServiceImpl;
 import com.capgemini.chess.service.to.UserProfileTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,13 +18,13 @@ import com.capgemini.chess.service.to.UserProfileTO;
 public class UserServiceTest {
 
 	@Autowired
-	UserService service;
+	ProfileService service;
 
 	@Configuration
 	static class RankServiceTestContextConfiguration {
 		@Bean
-		public UserService userService() {
-			return new UserServiceImpl();
+		public ProfileService userService() {
+			return new ProfileServiceImpl();
 		}
 	}
 
