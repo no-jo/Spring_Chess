@@ -7,80 +7,103 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.capgemini.chess.dataaccess.entities.UserEntity;
-import com.capgemini.chess.ecxeptions.NoDataToRead;
-import com.capgemini.chess.profileDAOimpl.PlayerProfileDAOImplMap;
+import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.profileDAOimpl.UserProfileDAOImplMap;
+import com.capgemini.chess.service.mapper.UserProfileMapper;
+import com.capgemini.chess.service.to.AccountTO;
 import com.capgemini.chess.service.to.UserProfileTO;
 
 public class UserProfileDAOImplMapTest {
-	// TODO pytanie: jaka praktyka jest lepsza czy polegac na junitcie czy pisac
-	// to samemu w kazdym tescie ?
-	PlayerProfileDAOImplMap DAO = new PlayerProfileDAOImplMap();
-	UserProfileTO profile1 = new UserProfileTO();
-	UserProfileTO profile2 = new UserProfileTO();
+
+	UserProfileDAOImplMap DAO;
+	UserProfileTO profile1;
+	UserProfileTO profile2;
 
 	@Before
 	public void setUp() throws Exception {
-		addProfileDetailsSample1();
-		addProfileDetailsSample2();
+		DAO = new UserProfileDAOImplMap();
+		addInitialEntitiesToMap(DAO);
 	}
 
 	@Test
-	public void shouldStoreNewProfileWithID1() throws NoDataToRead {
-		// when
-		DAO.create(profile1);
+	public void shouldStoreNewProfileWithID1() throws UserNotFound {
+		// given
+		UserProfileDAOImplMap userDAO = new UserProfileDAOImplMap();		
+		AccountTO profile1 = new AccountTO();
+		profile1.setPassword("VVV");
+		profile1.setLogin("sth");
 		Long result = 1L;
-		UserProfileTO read = DAO.read(profile1.getId());
+		
+		//when
+		userDAO.create(profile1);
+		AccountTO read = DAO.readAccount(profile1.getId());
+		
 		// then
-		assertEquals(1, DAO.getProfiles().size());
-		assertTrue(DAO.getProfiles().containsKey(1L));
+		assertEquals(1, userDAO.getProfiles().size());
+		assertTrue(userDAO.getProfiles().containsKey(1L));
 		assertEquals(result, read.getId());
 	}
 
 	@Test
 	public void shouldStoreTwoUsersAndDeleteFirstOne() {
 		// when
-		UserProfileTO firstProfile = DAO.create(profile1);
-		UserProfileTO secondProfile = DAO.create(profile2);
-		DAO.delete(firstProfile.getId());
-		Long result = 2L;
+		DAO.delete(1L);
 		// then
 		assertEquals(1, DAO.getProfiles().size());
 		assertTrue(DAO.getProfiles().containsKey(2L));
-		assertEquals(result, secondProfile.getId());
 	}
-	
+
 	@Test
-	public void shouldUpdateUser() {
+	public void shouldUpdateUserProfile() {
 		// given
-		DAO.create(profile1);
-		DAO.create(profile2);
-		UserProfileTO thirdProfile = new UserProfileTO();
+		UserProfileTO thirdProfile = new UserProfileTO(UserProfileMapper.map(DAO.getProfiles().get(333L)));
 		thirdProfile.setName("Anna");
-		thirdProfile.setId(profile1.getId());
-		
-		//when
+
+		// when
 		thirdProfile = DAO.update(thirdProfile);
 
 		// then
 		assertEquals(2, DAO.getProfiles().size());
-		UserEntity user_name = DAO.getProfiles().get(1L);
-		assertEquals("Anna", user_name.getName());
-
+		assertEquals("Anna", DAO.getProfiles().get(333L).getName());
 	}
 	
-	private void addProfileDetailsSample2() {
+	@Test
+	public void shouldUpdatePassword() {
+		// given
+		AccountTO thirdProfile = new AccountTO();
+		thirdProfile.setPassword("Anna");
+		thirdProfile.setId(500L);
+
+		// when
+		thirdProfile = DAO.update(thirdProfile);
+
+		// then
+		assertEquals(2, DAO.getProfiles().size());
+		assertEquals("Anna", DAO.getProfiles().get(500L).getPassword());
+	}
+
+	private void addInitialEntitiesToMap(UserProfileDAOImplMap dAO2) {
+
+		UserEntity profile2 = new UserEntity();
 		profile2.setAboutMe("Etwas");
 		profile2.setEmail("email@gut.de");
 		profile2.setLifeMotto("gute reise");
 		profile2.setName("Hans");
 		profile2.setSurname("Holaus");
-	}
+		profile2.setPassword("AAA");
+		profile2.setLogin("dinge");
+		profile2.setId(333L);
+		DAO.addEntity(profile2);
 
-	private void addProfileDetailsSample1() {
+		UserEntity profile1 = new UserEntity();
 		profile1.setAboutMe("Something");
 		profile1.setEmail("email@correct.pl");
 		profile1.setLifeMotto("dont worry");
 		profile1.setName("Mark");
 		profile1.setSurname("Smith");
+		profile1.setPassword("VVV");
+		profile1.setLogin("sth");
+		profile1.setId(500L);
+		DAO.addEntity(profile1);
 	}
 }

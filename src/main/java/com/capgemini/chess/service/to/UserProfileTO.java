@@ -9,6 +9,16 @@ public class UserProfileTO {
 	private String aboutMe;
 	private String lifeMotto;
 
+	public UserProfileTO () {};
+	
+	public UserProfileTO (UserProfileTO profile) {
+		  this.id = profile.getId();
+		  this.name = profile.getName();
+		  this.surname = profile.getSurname();
+		  this.email = profile.getEmail();
+		  this.aboutMe = profile.getAboutMe();
+		  this.lifeMotto = profile.getLifeMotto();
+	}
 	
 	public Long getId() {
 		return id;

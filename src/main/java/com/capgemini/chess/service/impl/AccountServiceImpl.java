@@ -3,8 +3,8 @@ package com.capgemini.chess.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.chess.ecxeptions.InvalidPassword;
-import com.capgemini.chess.profileDAO.AccountDAO;
+import com.capgemini.chess.exceptions.InvalidPassword;
+import com.capgemini.chess.profileDAO.UserProfileDAO;
 import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.PasswordValidator;
 import com.capgemini.chess.service.to.AccountTO;
@@ -15,12 +15,12 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	PasswordValidator passValidation;
 	@Autowired
-	AccountDAO accountDao;
+	UserProfileDAO userDao;
 	
 	@Override
-	public AccountTO changePassword(AccountTO newTO) throws InvalidPassword {
-		passValidation.validatePassword(newTO.getPassword());
-		return accountDao.update(newTO);
+	public AccountTO changePassword(AccountTO newAccountTO) throws InvalidPassword {
+		passValidation.validatePassword(newAccountTO.getPassword());
+		return userDao.update(newAccountTO);
 	}
 
 }

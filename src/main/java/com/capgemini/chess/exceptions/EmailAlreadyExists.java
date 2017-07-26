@@ -1,4 +1,4 @@
-package com.capgemini.chess.ecxeptions;
+package com.capgemini.chess.exceptions;
 
 public class EmailAlreadyExists extends Exception {
 

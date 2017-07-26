@@ -1,7 +1,7 @@
 package com.capgemini.chess;
 
-import com.capgemini.chess.ecxeptions.EmailAlreadyExists;
-import com.capgemini.chess.ecxeptions.InvalidPassword;
+import com.capgemini.chess.exceptions.EmailAlreadyExists;
+import com.capgemini.chess.exceptions.InvalidPassword;
 import com.capgemini.chess.service.to.AccountTO;
 import com.capgemini.chess.service.to.MatchTO;
 import com.capgemini.chess.service.to.UserProfileTO;

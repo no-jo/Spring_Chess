@@ -9,6 +9,16 @@ public class AccountTO {
 	private String login;
 	private String password;
 	
+	public AccountTO(AccountTO accountTO) {
+		this.id = accountTO.getId();
+		this.login = accountTO.getLogin();
+		this.password = accountTO.getPassword();
+	}
+	
+	public AccountTO() {
+
+	}
+
 	public Long getId() {
 		return id;
 	}

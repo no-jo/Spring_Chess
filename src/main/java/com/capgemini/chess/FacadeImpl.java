@@ -3,8 +3,8 @@ package com.capgemini.chess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.chess.ecxeptions.EmailAlreadyExists;
-import com.capgemini.chess.ecxeptions.InvalidPassword;
+import com.capgemini.chess.exceptions.EmailAlreadyExists;
+import com.capgemini.chess.exceptions.InvalidPassword;
 import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.ProfileService;
 import com.capgemini.chess.service.to.AccountTO;
