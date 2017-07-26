@@ -1,7 +1,5 @@
 package com.capgemini.chess.service;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import com.capgemini.chess.ecxeptions.NoDataToRead;
 import com.capgemini.chess.profileDAO.UserProfileDAO;
 import com.capgemini.chess.profileDAOimpl.PlayerProfileDAOImplMap;
 import com.capgemini.chess.service.impl.ProfileServiceImpl;
-import com.capgemini.chess.service.to.UserProfileTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration

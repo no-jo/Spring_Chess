@@ -1,36 +1,14 @@
 package com.capgemini.chess.service.to;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class UserProfileTO {
 	
 	private Long id;
-	private String login;
-	private String password;
 	private String name;
 	private String surname;
 	private String email;
 	private String aboutMe;
 	private String lifeMotto;
-	
-	public String getLogin() {
-		return login;
-	}
-	
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	
-	@JsonIgnore
-	public String getPassword() {
-		return password;
-	}
-	
-	@JsonProperty
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 	
 	public Long getId() {
 		return id;

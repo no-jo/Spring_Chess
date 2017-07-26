@@ -26,10 +26,11 @@ public class PlayerProfileDAOImplMap implements UserProfileDAO {
 
 	@Override
 	public UserProfileTO read(Long userID) throws NoDataToRead {
-		if (profiles.isEmpty()) {
+		UserEntity user = profiles.get(userID);
+		if (user == null) {
 			throw new NoDataToRead();
 		}
-		return UserProfileMapper.map(profiles.get(userID));
+		return UserProfileMapper.map(user);
 	}
 
 	@Override
@@ -54,6 +55,12 @@ public class PlayerProfileDAOImplMap implements UserProfileDAO {
 
 	public void setProfiles(Map<Long, UserEntity> profiles) {
 		this.profiles = profiles;
+	}
+
+	@Override
+	public UserProfileTO findByEmail(String email) {
+		UserEntity user = profiles.values().stream().filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
+		return UserProfileMapper.map(user);
 	}
 
 }

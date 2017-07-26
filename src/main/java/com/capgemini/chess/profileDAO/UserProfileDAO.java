@@ -9,5 +9,6 @@ public interface UserProfileDAO {
 	UserProfileTO read(Long userID) throws NoDataToRead;	
 	UserProfileTO update(UserProfileTO newProfile);
 	UserProfileTO delete(Long userID);
+	UserProfileTO findByEmail(String email);
 	
 }

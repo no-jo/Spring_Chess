@@ -15,9 +15,7 @@ public class UserProfileMapper {
 			userTO.setEmail(userEntity.getEmail());
 			userTO.setId(userEntity.getId());
 			userTO.setLifeMotto(userEntity.getLifeMotto());
-			userTO.setLogin(userEntity.getLogin());
 			userTO.setName(userEntity.getName());
-			userTO.setPassword(userEntity.getPassword());
 			userTO.setSurname(userEntity.getSurname());
 			return userTO;
 		}
@@ -31,9 +29,7 @@ public class UserProfileMapper {
 			userEntity.setEmail(userTO.getEmail());
 			userEntity.setId(userTO.getId());
 			userEntity.setLifeMotto(userTO.getLifeMotto());
-			userEntity.setLogin(userTO.getLogin());
 			userEntity.setName(userTO.getName());
-			userEntity.setPassword(userTO.getPassword());
 			userEntity.setSurname(userTO.getSurname());
 			return userEntity;
 		}
@@ -47,7 +43,6 @@ public class UserProfileMapper {
 			userEntity.setId(userTO.getId());
 			userEntity.setLifeMotto(userTO.getLifeMotto());
 			userEntity.setName(userTO.getName());
-			userEntity.setPassword(userTO.getPassword());
 			userEntity.setSurname(userTO.getSurname());
 		}
 		return userEntity;
