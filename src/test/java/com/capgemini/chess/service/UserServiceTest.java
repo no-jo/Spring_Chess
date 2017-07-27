@@ -19,24 +19,28 @@ import com.capgemini.chess.service.impl.ProfileServiceImpl;
 public class UserServiceTest {
 
 	@Autowired
-	ProfileService service;
-	@Autowired
-	UserProfileDAO dao;
+	static 	UserProfileDAO dao;
 	@Autowired
 	EmailValidationService emailService;
+	@Autowired
+	ProfileService service;
 	
 	@Configuration //TODO (classes = {????.class})
 	static class RankServiceTestContextConfiguration {
 		@Bean
-		public ProfileService userService() {
-			return new ProfileServiceImpl();
-		}
-		@Bean
-		public UserProfileDAO daoSetup() {
+		public UserProfileDAO UserProfileDAO() {
 			return new UserProfileDAOImplMap();
 		}
+		@Bean
+		public EmailValidationService EmailValidationService() {
+			return new EmailValidationServiceImpl(dao);
+		}
+		@Bean
+		public ProfileService ProfileService() {
+			return new ProfileServiceImpl();
+		}
 	}
-	
+		
 
 	@Test (expected = UserNotFound.class)
 	public void shouldThrowExceptionAsDataIsEmpty() throws Exception {

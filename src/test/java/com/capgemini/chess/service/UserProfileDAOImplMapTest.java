@@ -1,7 +1,6 @@
 package com.capgemini.chess.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,14 +28,14 @@ public class UserProfileDAOImplMapTest {
 	public void shouldStoreNewProfileWithID1() throws UserNotFound {
 		// given
 		UserProfileDAOImplMap userDAO = new UserProfileDAOImplMap();		
-		AccountTO profile1 = new AccountTO();
-		profile1.setPassword("VVV");
-		profile1.setLogin("sth");
+		AccountTO profile = new AccountTO();
+		profile.setPassword("VVV");
+		profile.setLogin("sth");
 		Long result = 1L;
 		
 		//when
-		userDAO.create(profile1);
-		AccountTO read = DAO.readAccount(profile1.getId());
+		userDAO.create(profile);
+		AccountTO read = userDAO.readAccount(profile.getId());
 		
 		// then
 		assertEquals(1, userDAO.getProfiles().size());
@@ -47,39 +46,81 @@ public class UserProfileDAOImplMapTest {
 	@Test
 	public void shouldStoreTwoUsersAndDeleteFirstOne() {
 		// when
-		DAO.delete(1L);
+		DAO.delete(333L);
 		// then
 		assertEquals(1, DAO.getProfiles().size());
-		assertTrue(DAO.getProfiles().containsKey(2L));
+		assertTrue(DAO.getProfiles().containsKey(500L));
 	}
 
 	@Test
 	public void shouldUpdateUserProfile() {
 		// given
-		UserProfileTO thirdProfile = new UserProfileTO(UserProfileMapper.map(DAO.getProfiles().get(333L)));
-		thirdProfile.setName("Anna");
+		UserProfileTO updatedProfile = new UserProfileTO(UserProfileMapper.map(DAO.getProfiles().get(333L)));
+		updatedProfile.setName("Anna");
 
 		// when
-		thirdProfile = DAO.update(thirdProfile);
+		updatedProfile = DAO.update(updatedProfile);
 
 		// then
 		assertEquals(2, DAO.getProfiles().size());
 		assertEquals("Anna", DAO.getProfiles().get(333L).getName());
+		assertEquals("Holaus", DAO.getProfiles().get(333L).getSurname());
 	}
 	
 	@Test
 	public void shouldUpdatePassword() {
 		// given
-		AccountTO thirdProfile = new AccountTO();
-		thirdProfile.setPassword("Anna");
-		thirdProfile.setId(500L);
+		AccountTO updatedAccount = new AccountTO();
+		updatedAccount.setPassword("Anna");
+		updatedAccount.setId(500L);
 
 		// when
-		thirdProfile = DAO.update(thirdProfile);
+		updatedAccount = DAO.update(updatedAccount);
 
 		// then
 		assertEquals(2, DAO.getProfiles().size());
 		assertEquals("Anna", DAO.getProfiles().get(500L).getPassword());
+		assertEquals("Smith", DAO.getProfiles().get(500L).getSurname());
+	}
+	
+	@Test
+	public void shouldFindByEmail() {
+		//given
+		String email = "email@gut.de";
+		
+		//when
+		UserProfileTO profile = DAO.findByEmail(email);
+		
+		//then
+		assertTrue(null != profile);
+	}
+	
+	@Test
+	public void shouldFindByEmailReturnNull() {
+		//given
+		String email = "a";
+		
+		//when
+		UserProfileTO profile = DAO.findByEmail(email);
+		
+		//then
+		assertTrue(null == profile);
+	}
+	
+	@Test (expected = UserNotFound.class)
+	public void shouldThrowNotFoundWhenNoProfile() throws UserNotFound {
+		//when
+		DAO.readProfile(2L);
+		//
+		fail("User not found exception not thrown");
+	}
+	
+	@Test (expected = UserNotFound.class)
+	public void shouldThrowNotFoundWhenNoAccount() throws UserNotFound {
+		//when
+		DAO.readAccount(2L);
+		//
+		fail("User not found exception not thrown");
 	}
 
 	private void addInitialEntitiesToMap(UserProfileDAOImplMap dAO2) {

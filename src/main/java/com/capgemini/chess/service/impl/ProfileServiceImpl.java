@@ -28,5 +28,13 @@ public class ProfileServiceImpl implements ProfileService {
 		emailValidation.validateEmail(user.getEmail());
 		return profileDao.update(user);
 	}
+
+	public void setProfileDao(UserProfileDAO profileDao) {
+		this.profileDao = profileDao;
+	}
+
+	public void setEmailValidation(EmailValidationService emailValidation) {
+		this.emailValidation = emailValidation;
+	}
 	
 }

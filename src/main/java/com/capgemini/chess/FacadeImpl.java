@@ -41,4 +41,12 @@ public class FacadeImpl implements Facade {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void setProfileService(ProfileService profileService) {
+		this.profileService = profileService;
+	}
+
+	public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
+	}
 }

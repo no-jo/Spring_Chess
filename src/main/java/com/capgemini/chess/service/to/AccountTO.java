@@ -15,6 +15,11 @@ public class AccountTO {
 		this.password = accountTO.getPassword();
 	}
 	
+	public AccountTO(Long ID, String log, String pass) {
+		id = ID;
+		login = log;
+		password = pass;
+	}
 	public AccountTO() {
 
 	}

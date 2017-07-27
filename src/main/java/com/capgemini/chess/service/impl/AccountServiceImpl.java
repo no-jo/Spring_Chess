@@ -23,4 +23,12 @@ public class AccountServiceImpl implements AccountService {
 		return userDao.update(newAccountTO);
 	}
 
+	public void setPassValidation(PasswordValidator passValidation) {
+		this.passValidation = passValidation;
+	}
+
+	public void setUserDao(UserProfileDAO userDao) {
+		this.userDao = userDao;
+	}
+
 }

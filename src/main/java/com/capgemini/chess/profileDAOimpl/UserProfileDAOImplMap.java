@@ -19,9 +19,9 @@ public class UserProfileDAOImplMap implements UserProfileDAO {
 	private Map<Long, UserEntity> profiles = new HashMap<Long, UserEntity>();
 	
 	public void addEntity(UserEntity newUser) {
-		Long key = generateId();
-		newUser.setId(key);
-		profiles.put(key, newUser);
+//		Long key = generateId();
+//		newUser.setId(key);
+		profiles.put(newUser.getId(), newUser);
 		return;
 	}
 
