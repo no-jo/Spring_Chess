@@ -7,10 +7,10 @@ import com.capgemini.chess.exceptions.EmailAlreadyExists;
 import com.capgemini.chess.exceptions.InvalidPassword;
 import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.ProfileService;
-import com.capgemini.chess.service.to.AccountTO;
 import com.capgemini.chess.service.to.MatchTO;
-import com.capgemini.chess.service.to.UserProfileTO;
 import com.capgemini.chess.service.to.statsTO;
+import com.capgemini.chess.tos.AccountTO;
+import com.capgemini.chess.tos.UserProfileTO;
 
 @Service
 public class FacadeImpl implements Facade {
@@ -31,13 +31,13 @@ public class FacadeImpl implements Facade {
 	};
 	
 	@Override
-	public statsTO getStats(Long userID) {
+	public statsTO getRanking(Long userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MatchTO updateRanking(MatchTO match) {
+	public MatchTO registerMatch(MatchTO match) {
 		// TODO Auto-generated method stub
 		return null;
 	}
