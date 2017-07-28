@@ -1,4 +1,4 @@
-package com.capgemini.chess.userprofile;
+package com.capgemini.chess;
 
 import static org.junit.Assert.*;
 

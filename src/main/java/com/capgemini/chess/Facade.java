@@ -1,16 +1,20 @@
 package com.capgemini.chess;
 
+import java.util.List;
+
 import com.capgemini.chess.exceptions.EmailAlreadyExists;
 import com.capgemini.chess.exceptions.InvalidPassword;
+import com.capgemini.chess.exceptions.UserNotFound;
 import com.capgemini.chess.service.to.MatchTO;
-import com.capgemini.chess.service.to.statsTO;
+import com.capgemini.chess.to.UserStatisticsTO;
 import com.capgemini.chess.tos.AccountTO;
 import com.capgemini.chess.tos.UserProfileTO;
 
 public interface Facade {
 	
 	UserProfileTO updateProfile(UserProfileTO newProfile) throws EmailAlreadyExists;
-	statsTO getRanking(Long userID);
+	List<UserStatisticsTO> getRanking();
+	int getUserRankingPosition(Long userID) throws UserNotFound;
 	MatchTO registerMatch(MatchTO match);
 	AccountTO changePassword(AccountTO account) throws InvalidPassword;
 }

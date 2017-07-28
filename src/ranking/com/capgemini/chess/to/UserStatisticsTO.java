@@ -1,11 +1,11 @@
 package com.capgemini.chess.to;
 
-public class UserRankingTO {
+public class UserStatisticsTO {
 
 	private Long id;
+	private Long userid;
 	private long scoreSum;
 	private int level;
-	private long position;
 	private int wins;
 	private int loses;
 	private int draws;
@@ -28,12 +28,6 @@ public class UserRankingTO {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public long getPosition() {
-		return position;
-	}
-	public void setPosition(long position) {
-		this.position = position;
-	}
 	public int getWins() {
 		return wins;
 	}
@@ -52,5 +46,10 @@ public class UserRankingTO {
 	public void setDraws(int draws) {
 		this.draws = draws;
 	}
-	
+	public Long getUserid() {
+		return userid;
+	}
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
 }
