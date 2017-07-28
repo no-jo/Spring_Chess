@@ -1,6 +1,9 @@
 package com.capgemini.chess;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -12,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.capgemini.chess.Facade;
-import com.capgemini.chess.FacadeImpl;
+import com.capgemini.chess.dataaccess.UserStatisticsDAO;
+import com.capgemini.chess.dataaccess.UserStatisticsDAOImpl;
 import com.capgemini.chess.dataaccess.entities.UserEntity;
 import com.capgemini.chess.dataaccess.objects.UserProfileDAO;
 import com.capgemini.chess.dataaccess.objects.UserProfileDAOImplMap;
@@ -24,16 +27,19 @@ import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.EmailValidationService;
 import com.capgemini.chess.service.PasswordValidator;
 import com.capgemini.chess.service.ProfileService;
+import com.capgemini.chess.service.RankingService;
+import com.capgemini.chess.service.RankingServiceImpl;
 import com.capgemini.chess.service.impl.AccountServiceImpl;
 import com.capgemini.chess.service.impl.EmailValidationServiceImpl;
 import com.capgemini.chess.service.impl.PasswordValidatorImpl;
 import com.capgemini.chess.service.impl.ProfileServiceImpl;
+import com.capgemini.chess.to.UserStatisticsTO;
 import com.capgemini.chess.tos.AccountTO;
 import com.capgemini.chess.tos.UserProfileTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class FacadeImplTest {
+public class FacadeImplIntegrationTest {
 	
 	@Autowired
 	Facade facade;
@@ -47,6 +53,10 @@ public class FacadeImplTest {
 	PasswordValidator passval;
 	@Autowired
 	AccountService accserv;
+	@Autowired
+	UserStatisticsDAO statDao;
+	@Autowired
+	RankingService rankService;
 	
 	@Configuration
 	static class RankServiceTestContextConfiguration {
@@ -69,17 +79,25 @@ public class FacadeImplTest {
 		@Bean
 		public PasswordValidator PasswordValidator() {
 			return new PasswordValidatorImpl();
-		}
-		
+		}		
 		@Bean
 		public AccountService AccountService() {
 			return new AccountServiceImpl();
 		}
+		@Bean
+		public UserStatisticsDAO StatDaoSetUp() {
+			return new UserStatisticsDAOImpl();
+		}
+		@Bean
+		public RankingService RankingServSetUp() {
+			return new RankingServiceImpl(StatDaoSetUp());
+		};
 	}
 
 	@Before
 	public void addTestData() {
 		addUserEntities();
+		setDummyStats();
 	}
 
 	@Test
@@ -129,9 +147,13 @@ public class FacadeImplTest {
 	}
 
 	@Test
-	@Ignore
-	public void testUpdateRanking() {
-		fail("Not yet implemented");
+	public void shouldReturnRanking() {
+		//when
+		ArrayList<UserStatisticsTO> ranking = facade.getRanking();
+		Long L = 7L;
+		//then
+		assertEquals(3, ranking.size());
+		assertEquals(L, ranking.get(0).getUserid());
 	}
 	
 	private void addUserEntities() {
@@ -169,5 +191,31 @@ public class FacadeImplTest {
 		dao.addEntity(profile3);
 		
 	}
-
+	
+	private void setDummyStats() {
+		
+		UserStatisticsTO stat1 = new UserStatisticsTO();
+		stat1.setId(1L);
+		stat1.setUserid(5L);
+		stat1.setCurrentScoreSum(100);
+		stat1.setLevel(7);
+		stat1.setWins(3);
+		statDao.addStats(stat1);
+		
+		UserStatisticsTO stat2 = new UserStatisticsTO();
+		stat2.setId(2L);
+		stat2.setUserid(6L);
+		stat2.setCurrentScoreSum(100);
+		stat2.setLevel(7);
+		stat2.setWins(4);
+		statDao.addStats(stat2);		
+		
+//		UserStatisticsTO stat3 = new UserStatisticsTO();
+//		stat3.setId(3L);
+//		stat3.setUserid(7L);
+//		stat3.setCurrentScoreSum(100);
+//		stat3.setLevel(8);
+//		stat3.setWins(4);
+//		statDao.addStats(stat3);
+	}
 }

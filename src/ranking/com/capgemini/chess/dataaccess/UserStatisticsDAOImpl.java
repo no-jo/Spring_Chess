@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +19,8 @@ public class UserStatisticsDAOImpl implements UserStatisticsDAO {
 	private Set<UserStatisticsEntity> stats = new HashSet<UserStatisticsEntity>();
 	
 	@Override
-	public List<UserStatisticsTO> getAllSortedDescending() {
-		List<UserStatisticsTO> list = getAll();
+	public ArrayList<UserStatisticsTO> getAllSortedDescending() {
+		ArrayList<UserStatisticsTO> list = new ArrayList<UserStatisticsTO>(getAll());
 		list.sort(Collections.reverseOrder(new StatsComparator()));
 		return list;
 	}
@@ -27,15 +28,13 @@ public class UserStatisticsDAOImpl implements UserStatisticsDAO {
 	@Override
 	public UserStatisticsTO addStats(UserStatisticsTO userStat) {
 		stats.add(UserStatisticsMapper.map(userStat));
-		return null;
+		return userStat;
 	}
 
 	@Override
 	public List<UserStatisticsTO> getAll() {
-		List<UserStatisticsEntity> enList = new ArrayList<>(stats);
-		List<UserStatisticsTO> list = new ArrayList<UserStatisticsTO>();
-		list = UserStatisticsMapper.map2TOs(enList);
-		return list;
+		return stats.stream()
+				.map(statEntity -> UserStatisticsMapper.map(statEntity)).collect(Collectors.toList());
 	}
 
 }

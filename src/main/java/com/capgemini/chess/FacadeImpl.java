@@ -1,6 +1,6 @@
 package com.capgemini.chess;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class FacadeImpl implements Facade {
 	};	
 	
 	@Override
-	public List<UserStatisticsTO> getRanking() {
+	public ArrayList<UserStatisticsTO> getRanking() {
 		return rankingService.getAllUsersRanking();
 	}
 	

@@ -1,5 +1,6 @@
 package com.capgemini.chess.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import com.capgemini.chess.to.UserStatisticsTO;
 @Service
 public class RankingServiceImpl implements RankingService {
 	
-	private UserStatisticsDAO statDao;	
+	//@Autowired
+	private UserStatisticsDAO statDao = null;	
 
 	@Autowired
 	public RankingServiceImpl(UserStatisticsDAO statDao) {
@@ -21,15 +23,14 @@ public class RankingServiceImpl implements RankingService {
 
 	@Override
 	public int getPosition(Long userID) throws UserNotFound {
-		getPosition(userID, getAllUsersRanking());
-		return 0;
+		return getPosition(userID, getAllUsersRanking());
 	}
 
 	@Override
 	public int getPosition(Long userID, List<UserStatisticsTO> list) throws UserNotFound {
 		int pos = 1;
 		for (UserStatisticsTO user : list) {
-			if (user.getUserid() == userID) {
+			if (user.getUserid().equals(userID)) {
 				return pos;
 			}
 			pos++;
@@ -38,7 +39,7 @@ public class RankingServiceImpl implements RankingService {
 	}
 	
 	@Override
-	public List<UserStatisticsTO> getAllUsersRanking() {
+	public ArrayList<UserStatisticsTO> getAllUsersRanking() {
 		return statDao.getAllSortedDescending();
 	}
 }

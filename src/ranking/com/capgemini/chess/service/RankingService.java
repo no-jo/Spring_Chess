@@ -1,5 +1,6 @@
 package com.capgemini.chess.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.capgemini.chess.exceptions.UserNotFound;
@@ -9,6 +10,6 @@ public interface RankingService {
 	
 	int getPosition(Long userID) throws UserNotFound;
 	int getPosition(Long userID, List<UserStatisticsTO> list) throws UserNotFound;
-	List<UserStatisticsTO> getAllUsersRanking();
+	ArrayList<UserStatisticsTO> getAllUsersRanking();
 	
 }

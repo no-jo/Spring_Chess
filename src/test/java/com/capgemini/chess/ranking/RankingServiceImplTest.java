@@ -1,6 +1,6 @@
 package com.capgemini.chess.ranking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,10 +20,9 @@ import com.capgemini.chess.to.UserStatisticsTO;
 @RunWith(MockitoJUnitRunner.class)
 public class RankingServiceImplTest {
 
-	@InjectMocks
-	RankingServiceImpl rankingService;
+	private RankingServiceImpl rankingService;
 	@Mock
-	UserStatisticsDAO statDao;
+	private UserStatisticsDAO statDao;
 		
 	@Before
 	public void setUp() {
@@ -37,9 +35,9 @@ public class RankingServiceImplTest {
 		Mockito.when(statDao.getAllSortedDescending()).thenReturn(getDummyStats());
 		//Mockito.when(rankingService.getAllUsersRanking()).thenReturn(getDummyStats());
 		//when
-		int pos = rankingService.getPosition(3L);
+		int pos = rankingService.getPosition(7L);
 		//then
-		assertEquals(1, pos);		
+		assertEquals(3, pos);		
 	}
 	
 	@Test
@@ -52,8 +50,8 @@ public class RankingServiceImplTest {
 		assertEquals(3, result.size());
 	}
 
-	private List<UserStatisticsTO> getDummyStats() {
-		List<UserStatisticsTO> users = new ArrayList<UserStatisticsTO>();
+	private ArrayList<UserStatisticsTO> getDummyStats() {
+		ArrayList<UserStatisticsTO> users = new ArrayList<UserStatisticsTO>();
 		
 		UserStatisticsTO stat1 = new UserStatisticsTO();
 		stat1.setId(1L);

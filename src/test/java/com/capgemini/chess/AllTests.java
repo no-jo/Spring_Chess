@@ -8,7 +8,7 @@ import com.capgemini.chess.ranking.RankingTestSuite;
 import com.capgemini.chess.userprofile.UserProfileTestSuite;
 
 @RunWith(Suite.class)
-@SuiteClasses({UserProfileTestSuite.class, RankingTestSuite.class})
+@SuiteClasses({UserProfileTestSuite.class, RankingTestSuite.class, FacadeImplIntegrationTest.class})
 public class AllTests {
 
 }
