@@ -1,6 +1,7 @@
 package com.capgemini.chess.service.to;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.capgemini.chess.enums.MatchStatus;
@@ -12,7 +13,7 @@ public class MatchResultsCTO {
 	private Long opponentID;
 	private Long matchID;
 	private MatchStatus status;
-	private List<MatchPointsTO> matchPoints;
+	private List<MatchPointsTO> matchPoints = new ArrayList<MatchPointsTO>();
 
 	public MatchResultsCTO(MatchTO match, List<MatchPointsTO> results) {
 		date = match.getDate();

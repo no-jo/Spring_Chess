@@ -46,4 +46,10 @@ public class UserStatisticsDAOImpl implements UserStatisticsDAO {
 		return null;
 	}
 
+	@Override
+	public UserStatisticsTO update(UserStatisticsTO userStats) {
+		stats.removeIf(stats -> stats.getUserid().equals(userStats.getUserid()));
+		return addStats(userStats);
+	}
+
 }

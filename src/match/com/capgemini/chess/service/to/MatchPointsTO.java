@@ -8,6 +8,14 @@ public class MatchPointsTO {
 	private long scoreIncrement;
 	private MatchResult result;
 
+	public MatchPointsTO (){};
+	
+	public MatchPointsTO (Long ID, long score , MatchResult result) {
+		userID = ID;
+		scoreIncrement = score;
+		this.result = result;
+	}
+	
 	public Long getUserID() {
 		return userID;
 	}

@@ -9,8 +9,8 @@ public class MatchResultsEntity {
 	private LocalDate date;
 	private Long challengerID;
 	private Long opponentID;
-	private int challengerScore;
-	private int opponentScore;
+	private long challengerScore;
+	private long opponentScore;
 	private Long matchID;
 	private MatchStatus status;
 	private MatchResult challengerResult;
@@ -40,19 +40,19 @@ public class MatchResultsEntity {
 		this.opponentID = opponentID;
 	}
 
-	public int getChallengerScore() {
+	public long getChallengerScore() {
 		return challengerScore;
 	}
 
-	public void setChallengerScore(int challengerScore) {
+	public void setChallengerScore(long challengerScore) {
 		this.challengerScore = challengerScore;
 	}
 
-	public int getOpponentScore() {
+	public long getOpponentScore() {
 		return opponentScore;
 	}
 
-	public void setOpponentScore(int opponentScore) {
+	public void setOpponentScore(long opponentScore) {
 		this.opponentScore = opponentScore;
 	}
 

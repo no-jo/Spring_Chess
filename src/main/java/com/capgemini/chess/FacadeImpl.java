@@ -11,6 +11,7 @@ import com.capgemini.chess.exceptions.UserNotFound;
 import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.ProfileService;
 import com.capgemini.chess.service.RankingService;
+import com.capgemini.chess.service.to.MatchResultsCTO;
 import com.capgemini.chess.service.to.MatchTO;
 import com.capgemini.chess.services.MatchRegistrationCompositeService;
 import com.capgemini.chess.to.UserStatisticsTO;
@@ -50,9 +51,8 @@ public class FacadeImpl implements Facade {
 	}
 
 	@Override
-	public MatchTO registerMatch(MatchTO match) {
-		matchRegistration.register(match);
-		return null;
+	public MatchResultsCTO registerMatch(MatchTO match) {
+		return matchRegistration.register(match);
 	}
 
 	public void setProfileService(ProfileService profileService) {

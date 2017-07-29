@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +14,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.capgemini.chess.dataaccess.MatchHistoryDAO;
+import com.capgemini.chess.dataaccess.MatchHistoryDAOImpl;
 import com.capgemini.chess.dataaccess.UserStatisticsDAO;
 import com.capgemini.chess.dataaccess.UserStatisticsDAOImpl;
 import com.capgemini.chess.dataaccess.entities.UserEntity;
 import com.capgemini.chess.dataaccess.objects.UserProfileDAO;
 import com.capgemini.chess.dataaccess.objects.UserProfileDAOImplMap;
+import com.capgemini.chess.enums.MatchResult;
+import com.capgemini.chess.enums.MatchStatus;
 import com.capgemini.chess.exceptions.EmailAlreadyExists;
 import com.capgemini.chess.exceptions.InvalidPassword;
 import com.capgemini.chess.exceptions.UserNotFound;
@@ -33,6 +36,15 @@ import com.capgemini.chess.service.impl.AccountServiceImpl;
 import com.capgemini.chess.service.impl.EmailValidationServiceImpl;
 import com.capgemini.chess.service.impl.PasswordValidatorImpl;
 import com.capgemini.chess.service.impl.ProfileServiceImpl;
+import com.capgemini.chess.service.to.MatchTO;
+import com.capgemini.chess.services.MatchHistoryUpdateService;
+import com.capgemini.chess.services.MatchHistoryUpdateServiceImpl;
+import com.capgemini.chess.services.MatchRegistrationCompositeService;
+import com.capgemini.chess.services.MatchRegistrationCompositeServiceImpl;
+import com.capgemini.chess.services.PointsCalculationService;
+import com.capgemini.chess.services.PointsCalculationServiceImpl;
+import com.capgemini.chess.services.UserStatisticsUpdateService;
+import com.capgemini.chess.services.UserStatisticsUpdateServiceImpl;
 import com.capgemini.chess.to.UserStatisticsTO;
 import com.capgemini.chess.tos.AccountTO;
 import com.capgemini.chess.tos.UserProfileTO;
@@ -57,6 +69,16 @@ public class FacadeImplIntegrationTest {
 	UserStatisticsDAO statDao;
 	@Autowired
 	RankingService rankService;
+	@Autowired
+	MatchRegistrationCompositeService matchService;
+	@Autowired
+	PointsCalculationService pointsCalculator;
+	@Autowired
+	UserStatisticsUpdateService statsUpdater;
+	@Autowired
+	MatchHistoryUpdateService matchUpdater;
+	@Autowired
+	MatchHistoryDAO historyDao;
 	
 	@Configuration
 	static class RankServiceTestContextConfiguration {
@@ -91,17 +113,49 @@ public class FacadeImplIntegrationTest {
 		@Bean
 		public RankingService RankingServSetUp() {
 			return new RankingServiceImpl(StatDaoSetUp());
-		};
+		}
+		@Bean
+		public MatchRegistrationCompositeService Composite() {
+			return new MatchRegistrationCompositeServiceImpl();
+		}
+		@Bean
+		public PointsCalculationService setMatchRegister() {
+			return new PointsCalculationServiceImpl(StatDaoSetUp());
+		}
+		@Bean
+		public UserStatisticsUpdateService statsUpdaterset() {
+			return new UserStatisticsUpdateServiceImpl(StatDaoSetUp());
+		}
+		@Bean
+		public MatchHistoryUpdateService setUpmatchUpdater() {
+			return new MatchHistoryUpdateServiceImpl();
+		}
+		@Bean
+		public MatchHistoryDAO setUphistoryDao() {
+			return new MatchHistoryDAOImpl();
+		}
 	}
-
-	@Before
-	public void addTestData() {
-		addUserEntities();
-
+	
+	@Test
+	public void shouldRegisterMatch() {
+		//given
+		MatchTO match = new MatchTO();
+		match.setChallengerID(6L);
+		match.setChallengerResult(MatchResult.LOST);
+		match.setMatchID(999L);
+		match.setOpponentID(7L);
+		match.setOpponentResult(MatchResult.WON);
+		match.setStatus(MatchStatus.COMPLETED);
+		//when
+		facade.registerMatch(match);
+		//then
+		assertEquals(1, historyDao.getAll().size());
 	}
 	
 	@Test
 	public void shouldSuccesfullyUpdateEmail() throws EmailAlreadyExists, UserNotFound {
+		//given
+		addUserEntities();
 		//when
 		UserProfileTO newProfile = new UserProfileTO();
 		newProfile.setId(3L);
@@ -114,6 +168,8 @@ public class FacadeImplIntegrationTest {
 	
 	@Test (expected = EmailAlreadyExists.class)
 	public void shouldThrowExceptionForDuplicatedEmail() throws EmailAlreadyExists, UserNotFound {
+		//given
+		addUserEntities();
 		//when
 		UserProfileTO newProfile = new UserProfileTO();
 		newProfile.setId(3L);
@@ -126,6 +182,8 @@ public class FacadeImplIntegrationTest {
 
 	@Test (expected = InvalidPassword.class)
 	public void shouldThrowExceptionPasswordNotValid() throws InvalidPassword {
+		//given
+		addUserEntities();
 		//when
 		facade.changePassword(new AccountTO(10L, "sample_log", "pass"));
 		//then
@@ -134,16 +192,12 @@ public class FacadeImplIntegrationTest {
 	
 	@Test 
 	public void shouldUpdatePasswordCorrectly() throws InvalidPassword, UserNotFound {
+		//given
+		addUserEntities();
 		//when
 		facade.changePassword(new AccountTO(10L, "sample", "PASS"));
 		//then
 		assertEquals("PASS", dao.readAccount(10L).getPassword());
-	}
-
-	@Test
-	@Ignore
-	public void testGetStats() {
-		fail("Not yet implemented");
 	}
 
 	@Test
