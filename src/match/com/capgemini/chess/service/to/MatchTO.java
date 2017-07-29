@@ -2,15 +2,16 @@ package com.capgemini.chess.service.to;
 
 import java.time.LocalDate;
 
+import com.capgemini.chess.enums.MatchResult;
 import com.capgemini.chess.enums.MatchStatus;
 
 public class MatchTO {
 	
 	LocalDate date;
-	Long playerID;
+	Long challengerID;
 	Long opponentID;
-	int playerScore;
-	int opponentScore;
+	MatchResult challengerResult;
+	MatchResult opponentResult;
 	Long matchID;
 	MatchStatus status;
 	
@@ -20,29 +21,17 @@ public class MatchTO {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public Long getPlayerID() {
-		return playerID;
+	public Long getChallengerID() {
+		return challengerID;
 	}
-	public void setPlayerID(Long playerID) {
-		this.playerID = playerID;
+	public void setChallengerID(Long playerID) {
+		this.challengerID = playerID;
 	}
 	public Long getOpponentID() {
 		return opponentID;
 	}
 	public void setOpponentID(Long opponentID) {
 		this.opponentID = opponentID;
-	}
-	public int getPlayerScore() {
-		return playerScore;
-	}
-	public void setPlayerScore(int playerScore) {
-		this.playerScore = playerScore;
-	}
-	public int getOpponentScore() {
-		return opponentScore;
-	}
-	public void setOpponentScore(int opponentScore) {
-		this.opponentScore = opponentScore;
 	}
 	public Long getMatchID() {
 		return matchID;
@@ -55,6 +44,18 @@ public class MatchTO {
 	}
 	public void setStatus(MatchStatus status) {
 		this.status = status;
+	}
+	public MatchResult getChallengerResult() {
+		return challengerResult;
+	}
+	public void setChallengerResult(MatchResult player) {
+		this.challengerResult = player;
+	}
+	public MatchResult getOpponentResult() {
+		return opponentResult;
+	}
+	public void setOpponentResult(MatchResult opponent) {
+		this.opponentResult = opponent;
 	}
 	
 }

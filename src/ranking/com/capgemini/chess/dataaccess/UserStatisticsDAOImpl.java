@@ -37,4 +37,13 @@ public class UserStatisticsDAOImpl implements UserStatisticsDAO {
 				.map(statEntity -> UserStatisticsMapper.map(statEntity)).collect(Collectors.toList());
 	}
 
+	@Override
+	public UserStatisticsTO getUserStats(Long userID) {
+		for (UserStatisticsEntity statistic : stats) {
+			if (statistic.getUserid().equals(userID))
+				return UserStatisticsMapper.map(statistic);
+		}
+		return null;
+	}
+
 }

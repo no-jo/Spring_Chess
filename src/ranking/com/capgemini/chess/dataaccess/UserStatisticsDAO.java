@@ -10,5 +10,6 @@ public interface UserStatisticsDAO {
 	List<UserStatisticsTO> getAll();
 	ArrayList<UserStatisticsTO> getAllSortedDescending();
 	UserStatisticsTO addStats(UserStatisticsTO userStat);
+	UserStatisticsTO getUserStats(Long userID);
 	
 }

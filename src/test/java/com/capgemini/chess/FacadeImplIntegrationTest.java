@@ -97,9 +97,9 @@ public class FacadeImplIntegrationTest {
 	@Before
 	public void addTestData() {
 		addUserEntities();
-		setDummyStats();
-	}
 
+	}
+	
 	@Test
 	public void shouldSuccesfullyUpdateEmail() throws EmailAlreadyExists, UserNotFound {
 		//when
@@ -148,6 +148,21 @@ public class FacadeImplIntegrationTest {
 
 	@Test
 	public void shouldReturnRanking() {
+		//given 
+		setDummyStats();
+		//when
+		ArrayList<UserStatisticsTO> ranking = facade.getRanking();
+		Long L = 7L;
+		//then
+		assertEquals(3, ranking.size());
+		assertEquals(L, ranking.get(0).getUserid());
+	}
+	
+	@Test
+	@Ignore //have to add teardown method
+	public void shouldReturnPosition() {
+		//given 
+		setDummyStats();
 		//when
 		ArrayList<UserStatisticsTO> ranking = facade.getRanking();
 		Long L = 7L;
@@ -210,12 +225,12 @@ public class FacadeImplIntegrationTest {
 		stat2.setWins(4);
 		statDao.addStats(stat2);		
 		
-//		UserStatisticsTO stat3 = new UserStatisticsTO();
-//		stat3.setId(3L);
-//		stat3.setUserid(7L);
-//		stat3.setCurrentScoreSum(100);
-//		stat3.setLevel(8);
-//		stat3.setWins(4);
-//		statDao.addStats(stat3);
+		UserStatisticsTO stat3 = new UserStatisticsTO();
+		stat3.setId(3L);
+		stat3.setUserid(7L);
+		stat3.setCurrentScoreSum(100);
+		stat3.setLevel(8);
+		stat3.setWins(4);
+		statDao.addStats(stat3);
 	}
 }

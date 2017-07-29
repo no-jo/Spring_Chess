@@ -12,6 +12,7 @@ import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.ProfileService;
 import com.capgemini.chess.service.RankingService;
 import com.capgemini.chess.service.to.MatchTO;
+import com.capgemini.chess.services.MatchRegistrationCompositeService;
 import com.capgemini.chess.to.UserStatisticsTO;
 import com.capgemini.chess.tos.AccountTO;
 import com.capgemini.chess.tos.UserProfileTO;
@@ -25,6 +26,8 @@ public class FacadeImpl implements Facade {
 	private AccountService accountService;
 	@Autowired
 	private RankingService rankingService;
+	@Autowired
+	private MatchRegistrationCompositeService matchRegistration;
 	
 	@Override
 	public UserProfileTO updateProfile(UserProfileTO newProfile) throws EmailAlreadyExists {
@@ -48,7 +51,7 @@ public class FacadeImpl implements Facade {
 
 	@Override
 	public MatchTO registerMatch(MatchTO match) {
-		// TODO Auto-generated method stub
+		matchRegistration.register(match);
 		return null;
 	}
 
@@ -62,5 +65,9 @@ public class FacadeImpl implements Facade {
 
 	public void setRankingService(RankingService rankingService) {
 		this.rankingService = rankingService;
+	}
+
+	public void setMatchRegistration(MatchRegistrationCompositeService matchRegistration) {
+		this.matchRegistration = matchRegistration;
 	}
 }
