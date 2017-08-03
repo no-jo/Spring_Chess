@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.chess.dataaccess.UserStatisticsDAO;
-import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.to.UserStatisticsTO;
 
 @Service
@@ -16,18 +16,19 @@ public class RankingServiceImpl implements RankingService {
 	//@Autowired
 	private UserStatisticsDAO statDao = null;	
 
+	
 	@Autowired
 	public RankingServiceImpl(UserStatisticsDAO statDao) {
 		this.statDao = statDao;
 	}
 
 	@Override
-	public int getPosition(Long userID) throws UserNotFound {
+	public int getPosition(Long userID) throws UserNotFoundException {
 		return getPosition(userID, getAllUsersRanking());
 	}
 
 	@Override
-	public int getPosition(Long userID, List<UserStatisticsTO> list) throws UserNotFound {
+	public int getPosition(Long userID, List<UserStatisticsTO> list) throws UserNotFoundException {
 		int pos = 1;
 		for (UserStatisticsTO user : list) {
 			if (user.getUserid().equals(userID)) {
@@ -35,7 +36,7 @@ public class RankingServiceImpl implements RankingService {
 			}
 			pos++;
 		}
-		throw new UserNotFound();
+		throw new UserNotFoundException();
 	}
 	
 	@Override

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.chess.exceptions.EmailAlreadyExists;
 import com.capgemini.chess.exceptions.InvalidPassword;
-import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.service.AccountService;
 import com.capgemini.chess.service.ProfileService;
 import com.capgemini.chess.service.RankingService;
@@ -46,7 +46,7 @@ public class FacadeImpl implements Facade {
 	}
 	
 	@Override
-	public int getUserRankingPosition(Long userID) throws UserNotFound {
+	public int getUserRankingPosition(Long userID) throws UserNotFoundException {
 		return rankingService.getPosition(userID);
 	}
 

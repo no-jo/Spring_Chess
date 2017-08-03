@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.chess.dataaccess.objects.UserProfileDAO;
 import com.capgemini.chess.exceptions.EmailAlreadyExists;
-import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.service.EmailValidationService;
 import com.capgemini.chess.service.ProfileService;
 import com.capgemini.chess.tos.UserProfileTO;
@@ -19,7 +19,7 @@ public class ProfileServiceImpl implements ProfileService {
 	private EmailValidationService emailValidation;
 
 	@Override
-	public UserProfileTO readUser(Long id) throws UserNotFound {
+	public UserProfileTO readUser(Long id) throws UserNotFoundException {
 		return profileDao.readProfile(id);
 	}
 

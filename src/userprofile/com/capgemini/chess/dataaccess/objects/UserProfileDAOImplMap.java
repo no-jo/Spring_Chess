@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.chess.dataaccess.entities.UserEntity;
-import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.service.mapper.AccountMapper;
 import com.capgemini.chess.service.mapper.UserProfileMapper;
 import com.capgemini.chess.tos.AccountTO;
@@ -16,6 +16,30 @@ import com.capgemini.chess.tos.UserProfileTO;
 public class UserProfileDAOImplMap implements UserProfileDAO {
 
 	private Map<Long, UserEntity> profiles = new HashMap<Long, UserEntity>();
+	
+	public UserProfileDAOImplMap () {
+		UserEntity profile2 = new UserEntity();
+		profile2.setAboutMe("Etwas");
+		profile2.setEmail("email@gut.de");
+		profile2.setLifeMotto("gute reise");
+		profile2.setName("Hans");
+		profile2.setSurname("Holaus");
+		profile2.setPassword("AAA");
+		profile2.setLogin("dinge");
+		profile2.setId(333L);
+		profiles.put(333L, profile2);
+
+		UserEntity profile1 = new UserEntity();
+		profile1.setAboutMe("Something");
+		profile1.setEmail("email@correct.pl");
+		profile1.setLifeMotto("dont worry");
+		profile1.setName("Mark");
+		profile1.setSurname("Smith");
+		profile1.setPassword("VVV");
+		profile1.setLogin("sth");
+		profile1.setId(500L);
+		profiles.put(500L, profile1);
+	}
 	
 	public void addEntity(UserEntity newUser) {
 		profiles.put(newUser.getId(), newUser);
@@ -31,19 +55,19 @@ public class UserProfileDAOImplMap implements UserProfileDAO {
 	}
 
 	@Override
-	public UserProfileTO readProfile(Long userID) throws UserNotFound {
+	public UserProfileTO readProfile(Long userID) throws UserNotFoundException {
 		UserEntity user = profiles.get(userID);
 		if (user == null) {
-			throw new UserNotFound();
+			throw new UserNotFoundException();
 		}
 		return UserProfileMapper.map(user);
 	}
 	
 	@Override
-	public AccountTO readAccount(Long userID) throws UserNotFound {
+	public AccountTO readAccount(Long userID) throws UserNotFoundException {
 		UserEntity user = profiles.get(userID);
 		if (user == null) {
-			throw new UserNotFound();
+			throw new UserNotFoundException();
 		}
 		return AccountMapper.map(user);
 	}
@@ -75,7 +99,8 @@ public class UserProfileDAOImplMap implements UserProfileDAO {
 
 	@Override
 	public UserProfileTO findByEmail(String email) {
-		UserEntity user = profiles.values().stream().filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
+		UserEntity user = profiles.values().stream()
+				.filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
 		return UserProfileMapper.map(user);
 	}
 

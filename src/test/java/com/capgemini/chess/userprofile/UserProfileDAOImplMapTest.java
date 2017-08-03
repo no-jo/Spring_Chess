@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.capgemini.chess.dataaccess.entities.UserEntity;
 import com.capgemini.chess.dataaccess.objects.UserProfileDAOImplMap;
-import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.service.mapper.UserProfileMapper;
 import com.capgemini.chess.tos.AccountTO;
 import com.capgemini.chess.tos.UserProfileTO;
@@ -25,7 +25,7 @@ public class UserProfileDAOImplMapTest {
 	}
 
 	@Test
-	public void shouldStoreNewProfileWithID1() throws UserNotFound {
+	public void shouldStoreNewProfileWithID1() throws UserNotFoundException {
 		// given
 		UserProfileDAOImplMap userDAO = new UserProfileDAOImplMap();		
 		AccountTO profile = new AccountTO();
@@ -107,16 +107,16 @@ public class UserProfileDAOImplMapTest {
 		assertTrue(null == profile);
 	}
 	
-	@Test (expected = UserNotFound.class)
-	public void shouldThrowNotFoundWhenNoProfile() throws UserNotFound {
+	@Test (expected = UserNotFoundException.class)
+	public void shouldThrowNotFoundWhenNoProfile() throws UserNotFoundException {
 		//when
 		DAO.readProfile(2L);
 		//
 		fail("User not found exception not thrown");
 	}
 	
-	@Test (expected = UserNotFound.class)
-	public void shouldThrowNotFoundWhenNoAccount() throws UserNotFound {
+	@Test (expected = UserNotFoundException.class)
+	public void shouldThrowNotFoundWhenNoAccount() throws UserNotFoundException {
 		//when
 		DAO.readAccount(2L);
 		//

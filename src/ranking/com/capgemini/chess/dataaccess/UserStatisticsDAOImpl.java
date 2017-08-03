@@ -18,6 +18,32 @@ public class UserStatisticsDAOImpl implements UserStatisticsDAO {
 
 	private Set<UserStatisticsEntity> stats = new HashSet<UserStatisticsEntity>();
 	
+	public UserStatisticsDAOImpl() {
+		UserStatisticsEntity stat1 = new UserStatisticsEntity();
+		stat1.setId(1L);
+		stat1.setUserid(5L);
+		stat1.setCurrentScoreSum(100);
+		stat1.setLevel(7);
+		stat1.setWins(3);
+		stats.add(stat1);
+		
+		UserStatisticsEntity stat2 = new UserStatisticsEntity();
+		stat2.setId(2L);
+		stat2.setUserid(6L);
+		stat2.setCurrentScoreSum(100);
+		stat2.setLevel(7);
+		stat2.setWins(4);
+		stats.add(stat2);		
+		
+		UserStatisticsEntity stat3 = new UserStatisticsEntity();
+		stat3.setId(3L);
+		stat3.setUserid(7L);
+		stat3.setCurrentScoreSum(100);
+		stat3.setLevel(8);
+		stat3.setWins(4);
+		stats.add(stat3);
+	}
+	
 	@Override
 	public ArrayList<UserStatisticsTO> getAllSortedDescending() {
 		ArrayList<UserStatisticsTO> list = new ArrayList<UserStatisticsTO>(getAll());

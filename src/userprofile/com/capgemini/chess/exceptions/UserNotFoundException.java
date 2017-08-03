@@ -1,6 +1,6 @@
 package com.capgemini.chess.exceptions;
 
-public class UserNotFound extends Exception {
+public class UserNotFoundException extends Exception {
 
 	/**
 	 * 

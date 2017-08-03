@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.capgemini.chess.dataaccess.UserStatisticsDAO;
-import com.capgemini.chess.exceptions.UserNotFound;
+import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.service.RankingServiceImpl;
 import com.capgemini.chess.to.UserStatisticsTO;
 
@@ -30,10 +30,9 @@ public class RankingServiceImplTest {
 	}
 
 	@Test
-	public void shouldReturnOneOfThree() throws UserNotFound {
+	public void shouldReturnOneOfThree() throws UserNotFoundException {
 		//given
 		Mockito.when(statDao.getAllSortedDescending()).thenReturn(getDummyStats());
-		//Mockito.when(rankingService.getAllUsersRanking()).thenReturn(getDummyStats());
 		//when
 		int pos = rankingService.getPosition(7L);
 		//then
