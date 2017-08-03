@@ -21,9 +21,4 @@ public class MatchController {
 	public MatchResultsCTO registerMatch(@RequestBody MatchTO newMatch) {
 		return facade.registerMatch(newMatch);
 	}
-
-	@RequestMapping(method = RequestMethod.GET) 
-	public MatchTO getMatch() {
-		return new MatchTO();
-	}
 }

@@ -14,7 +14,7 @@ import com.capgemini.chess.tos.UserProfileTO;
 
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping ("/profile")
 public class ProfileController {
 
 	@Autowired
