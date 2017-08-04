@@ -17,7 +17,7 @@ public class UserStatisticsDAOImplTest {
 	@Before
 	public void setUp() {
 		dao = new UserStatisticsDAOImpl();
-		initializeData();
+		//initializeData();
 	}
 	
 

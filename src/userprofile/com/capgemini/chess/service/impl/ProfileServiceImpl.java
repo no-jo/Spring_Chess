@@ -36,5 +36,10 @@ public class ProfileServiceImpl implements ProfileService {
 	public void setEmailValidation(EmailValidationService emailValidation) {
 		this.emailValidation = emailValidation;
 	}
+
+	@Override
+	public UserProfileTO delete(Long id) {
+		return profileDao.delete(id);
+	}
 	
 }

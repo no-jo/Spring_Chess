@@ -16,10 +16,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.capgemini.chess.Facade;
 import com.capgemini.chess.to.UserStatisticsTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RankingControllerTest {
@@ -33,11 +33,7 @@ public class RankingControllerTest {
 	
 	@Before
 	public void setup() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setPrefix("/WEB-INF/templates/");
-		viewResolver.setSuffix(".jsp");
-
-		mockMvc = MockMvcBuilders.standaloneSetup(rankingController).setViewResolvers(viewResolver).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(rankingController).build();
 	}
 	
 	@Test
@@ -47,7 +43,7 @@ public class RankingControllerTest {
 		ranking.add(new UserStatisticsTO(2L, 6L, 100, 7, 4, 0, 0));
 		ranking.add(new UserStatisticsTO(1L, 5L, 100, 7, 3, 0, 0));
 		Mockito.when(facade.getRanking()).thenReturn(ranking);
-		String jsonRanking = "[{\"id\":2,\"userid\":6,\"level\":7,\"wins\":4,\"loses\":0,\"draws\":0,\"currentScoreSum\":100},{\"id\":1,\"userid\":5,\"level\":7,\"wins\":3,\"loses\":0,\"draws\":0,\"currentScoreSum\":100}]";
+		String jsonRanking = new ObjectMapper().writeValueAsString(ranking);
 		//when
 		ResultActions effect = mockMvc.perform(get("/ranking"));
 		//then

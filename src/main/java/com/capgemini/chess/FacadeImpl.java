@@ -55,6 +55,15 @@ public class FacadeImpl implements Facade {
 		return matchRegistration.register(match);
 	}
 
+	@Override
+	public UserProfileTO deleteProfile(Long id) {
+		return profileService.delete(id);
+	}
+
+	@Override
+	public UserProfileTO readProfile(Long id) throws UserNotFoundException {
+		return profileService.readUser(id);
+	}
 	public void setProfileService(ProfileService profileService) {
 		this.profileService = profileService;
 	}

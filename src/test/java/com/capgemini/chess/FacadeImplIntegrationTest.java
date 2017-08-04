@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,7 @@ import com.capgemini.chess.tos.UserProfileTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration (classes = ChessApplication.class)
+//@Transactional
 public class FacadeImplIntegrationTest {
 	
 	@Autowired
@@ -189,7 +189,7 @@ public class FacadeImplIntegrationTest {
 	@Test
 	public void shouldReturnRanking() {
 		//given 
-		setDummyStats();
+		//setDummyStats(); //currently values are set in constructor
 		//when
 		ArrayList<UserStatisticsTO> ranking = facade.getRanking();
 		Long L = 7L;
@@ -199,10 +199,9 @@ public class FacadeImplIntegrationTest {
 	}
 	
 	@Test
-	@Ignore //have to add teardown method
 	public void shouldReturnPosition() {
 		//given 
-		setDummyStats();
+		//setDummyStats(); // usually should have a before and teardown
 		//when
 		ArrayList<UserStatisticsTO> ranking = facade.getRanking();
 		Long L = 7L;

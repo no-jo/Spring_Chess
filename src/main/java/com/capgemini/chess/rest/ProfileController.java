@@ -7,31 +7,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.chess.dataaccess.objects.UserProfileDAO;
+import com.capgemini.chess.Facade;
 import com.capgemini.chess.exceptions.EmailAlreadyExists;
 import com.capgemini.chess.exceptions.UserNotFoundException;
 import com.capgemini.chess.tos.UserProfileTO;
-
 
 @RestController
 @RequestMapping ("/profile")
 public class ProfileController {
 
 	@Autowired
-	private UserProfileDAO userDAO;
+	private Facade facade;
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public UserProfileTO deleteProfile(@RequestParam("id") Long id) {
-		return userDAO.delete(id);
+		return facade.deleteProfile(id);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public UserProfileTO getUserProfile(@RequestParam("id") Long id) throws UserNotFoundException {
-		return userDAO.readProfile(id);
+		return facade.readProfile(id);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public UserProfileTO updateProfile(@RequestBody UserProfileTO profile) throws EmailAlreadyExists {
-		return userDAO.update(profile);
+		return facade.updateProfile(profile);
 	}
 }

@@ -3,6 +3,7 @@ package com.capgemini.chess.rest;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,11 @@ public class RankingController {
 	@RequestMapping(method = RequestMethod.POST)
 	public int getUserPosition(@RequestParam("id") Long id) throws UserNotFoundException {
 		return facade.getUserRankingPosition(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public String acceptArrayForRanking(@RequestBody UserStatisticsTO[] newStats) {
+		return "Array was passed as argument";
 	}
 
 }

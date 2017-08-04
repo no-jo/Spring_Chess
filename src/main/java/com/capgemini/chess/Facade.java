@@ -18,5 +18,7 @@ public interface Facade {
 	int getUserRankingPosition(Long userID) throws UserNotFoundException;
 	MatchResultsCTO registerMatch(MatchTO match);
 	AccountTO changePassword(AccountTO account) throws InvalidPassword;
+	UserProfileTO deleteProfile(Long id);
+	UserProfileTO readProfile(Long id) throws UserNotFoundException;
 }
 
